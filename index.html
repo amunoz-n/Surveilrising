@@ -1,0 +1,1473 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+
+<HTML>
+<HEAD>
+	
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<META NAME="VIEWPORT" CONTENT="width=device-width, initial-scale=1.0">
+	<LINK REL="preconnect" HREF="https://fonts.googleapis.com">
+	<LINK REL="preconnect" HREF="https://fonts.gstatic.com" crossorigin>
+	<LINK HREF="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Barlow:wght@400;500;600;700&display=swap" REL="stylesheet">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.15  (Win32)">
+	<META NAME="CREATED" CONTENT="20090416;11324839">
+	<STYLE>
+		:root {
+			--bg: #0d1119;
+			--panel: rgba(18, 25, 38, 0.78);
+			--panel-strong: rgba(22, 31, 47, 0.88);
+			--line: rgba(243, 195, 77, 0.34);
+			--text: #f3f4f7;
+			--muted: #aeb4c3;
+			--accent: #f3c34d;
+			--accent-strong: #c99218;
+			--shadow: 0 24px 54px rgba(0, 0, 0, 0.45);
+		}
+
+		@keyframes modalHeartbeat {
+			0%, 100% {
+				filter: drop-shadow(0 34px 80px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 30px rgba(255, 200, 87, 0.4)) drop-shadow(0 0 60px rgba(220, 80, 80, 0.25));
+			}
+			50% {
+				filter: drop-shadow(0 34px 80px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(255, 220, 120, 0.55)) drop-shadow(0 0 80px rgba(240, 100, 100, 0.35));
+			}
+		}
+
+		* {
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			margin: 0;
+			min-height: 100%;
+			font-family: "Barlow", "Trebuchet MS", sans-serif;
+			color: var(--text);
+			background:
+				radial-gradient(circle at 0% 0%, rgba(243, 195, 77, 0.14), transparent 36%),
+				radial-gradient(circle at 100% 0%, rgba(106, 83, 33, 0.22), transparent 42%),
+				linear-gradient(180deg, #0a0f17 0%, var(--bg) 45%, #090d14 100%);
+		}
+
+		body {
+			padding: 24px;
+		}
+
+		button,
+		input,
+		select,
+		textarea {
+			font: inherit;
+		}
+
+		.app-layout {
+			display: grid;
+			grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+			gap: 24px;
+			max-width: 1480px;
+			margin: 0 auto;
+			align-items: start;
+		}
+
+		.card-sidebar,
+		.builder-panel {
+			background: linear-gradient(155deg, rgba(18, 25, 38, 0.92), rgba(15, 21, 33, 0.85));
+			backdrop-filter: blur(10px);
+			border: 1px solid var(--line);
+			border-radius: 26px;
+			filter: drop-shadow(0 24px 54px rgba(0, 0, 0, 0.45));
+		}
+
+		.card-sidebar {
+			padding: 24px;
+			position: sticky;
+			top: 24px;
+		}
+
+		.table-area {
+			min-width: 0;
+		}
+
+		.builder-panel {
+			padding: 28px;
+		}
+
+		.sidebar-title {
+			margin: 0 0 10px;
+			font-size: 28px;
+			line-height: 1.1;
+			font-family: "Cinzel", Georgia, serif;
+			font-weight: 700;
+			color: #f7deb2;
+			letter-spacing: -0.03em;
+			text-shadow: 0 1px 8px rgba(201, 146, 24, 0.2);
+		}
+
+		.sidebar-help {
+			margin: 0;
+			color: var(--muted);
+			font-size: 14px;
+			line-height: 1.5;
+		}
+
+		.card-search,
+		.export-output,
+		.card-quantity {
+			width: 100%;
+			border: 1px solid var(--line);
+			border-radius: 14px;
+			padding: 12px 14px;
+			background: var(--panel-strong);
+			color: var(--text);
+			outline: none;
+			transition: border-color 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+		}
+
+		.card-search:focus,
+		.export-output:focus,
+		.card-quantity:focus {
+			border-color: rgba(243, 195, 77, 0.62);
+			filter: drop-shadow(0 0 0 4px rgba(243, 195, 77, 0.14));
+		}
+
+		.card-search {
+			margin-top: 0;
+		}
+
+		.search-row {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+			margin-top: 18px;
+		}
+
+		.search-row .card-search {
+			flex: 1 1 0;
+			min-width: 0;
+		}
+
+		.sidebar-actions,
+		.export-actions,
+		.card-row-controls {
+			display: flex;
+			gap: 12px;
+			align-items: center;
+			flex-wrap: wrap;
+		}
+
+		.sidebar-actions {
+			justify-content: flex-end;
+			flex-shrink: 0;
+			color: var(--muted);
+			font-size: 13px;
+			position: relative;
+			z-index: 1;
+		}
+
+		.clear-selection {
+			border: 0;
+			border-radius: 999px;
+			padding: 10px 16px;
+			background: linear-gradient(135deg, #f3c34d 0%, #dca42f 100%);
+			color: #1a1410;
+			font-weight: 700;
+			cursor: pointer;
+			filter: drop-shadow(0 10px 24px rgba(243, 195, 77, 0.24));
+			transition: transform 0.18s ease, filter 0.18s ease, opacity 0.18s ease;
+		}
+
+		.clear-selection:hover {
+			transform: translateY(-1px);
+			filter: drop-shadow(0 14px 28px rgba(243, 195, 77, 0.32));
+		}
+
+		.clear-selection:active {
+			transform: translateY(0);
+		}
+
+		.card-list {
+			list-style: none;
+			padding: 0;
+			margin: 26px 0 0;
+			padding-top: 6px;
+			max-height: 430px;
+			overflow: auto;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			position: relative;
+			z-index: 3;
+		}
+
+		.card-list .card-item,
+		.card-list .card-item-empty {
+			margin-top: 4px;
+		}
+
+		.card-item,
+		.card-item-empty {
+			border: 1px solid var(--line);
+			border-radius: 18px;
+			background: linear-gradient(165deg, rgba(14, 22, 38, 0.96), rgba(10, 16, 30, 0.92));
+			padding: 14px 16px;
+		}
+
+		.card-item {
+			cursor: pointer;
+			transition: transform 0.18s ease, border-color 0.18s ease, filter 0.18s ease;
+			position: relative;
+		}
+
+		.card-item:hover {
+			transform: translateY(-1px);
+			border-color: rgba(243, 195, 77, 0.58);
+			box-shadow: 0 0 6px 2px rgba(243, 195, 77, 0.45);
+			z-index: 6;
+		}
+
+		.card-item.active {
+			border-color: rgba(255, 216, 107, 0.9);
+			filter: drop-shadow(0 0 0 3px rgba(255, 216, 107, 0.24));
+		}
+
+		.card-item-row {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.card-item-name {
+			font-weight: 700;
+			line-height: 1.35;
+		}
+
+		.price-link {
+			display: inline-flex;
+			align-items: center;
+			gap: 7px;
+			padding: 7px 12px;
+			margin-top: 10px;
+			border: 1px solid var(--line);
+			border-radius: 999px;
+			background: linear-gradient(135deg, rgba(243, 195, 77, 0.2) 0%, rgba(201, 146, 24, 0.14) 100%);
+			color: #ffd978;
+			font-size: 13px;
+			font-weight: 700;
+			text-decoration: none;
+			transition: transform 0.18s ease, filter 0.18s ease, border-color 0.18s ease;
+		}
+
+		.price-link:hover {
+			transform: translateY(-1px);
+			border-color: rgba(243, 195, 77, 0.62);
+			filter: drop-shadow(0 10px 20px rgba(243, 195, 77, 0.18));
+		}
+
+		.price-link:active {
+			transform: translateY(0);
+		}
+
+		.price-link svg {
+			width: 14px;
+			height: 14px;
+			fill: #ffd978;
+		}
+
+		.add-inline,
+		.add-final {
+			padding: 7px 12px;
+			font-size: 12px;
+			letter-spacing: 0.01em;
+		}
+
+		.add-inline {
+			margin-left: auto;
+		}
+
+		.image-overlay {
+			position: fixed;
+			inset: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: rgba(18, 12, 8, 0.72);
+			backdrop-filter: blur(3px);
+			z-index: 9999;
+			padding: 22px;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity 0.22s ease;
+		}
+
+		.image-overlay.open {
+			opacity: 1;
+			pointer-events: auto;
+		}
+
+		.image-overlay.closing {
+			opacity: 0;
+			pointer-events: none;
+		}
+
+		.image-modal {
+			position: relative;
+			max-width: min(92vw, 620px);
+			max-height: 92vh;
+			padding: 14px;
+			border-radius: 22px;
+			background: rgba(15, 21, 33, 0.96);
+			border: 1px solid var(--line);
+			filter: drop-shadow(0 34px 80px rgba(0, 0, 0, 0.5));
+			transform: scale(0.3);
+			opacity: 0;
+			transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+		}
+
+		.image-overlay.open .image-modal {
+			transform: scale(1);
+			opacity: 1;
+			animation: modalHeartbeat 2.4s ease-in-out infinite;
+		}
+
+		.image-overlay.closing .image-modal {
+			transform: scale(0.3);
+			opacity: 0;
+		}
+
+		.image-overlay-content {
+			display: block;
+			max-width: min(86vw, 590px);
+			max-height: 76vh;
+			width: auto;
+			border-radius: 18px;
+			margin: 0 auto;
+			border: 0;
+		}
+
+		.image-close-btn {
+			position: absolute;
+			top: -10px;
+			right: -10px;
+			border: 0;
+			width: 34px;
+			height: 34px;
+			border-radius: 999px;
+			font-size: 20px;
+			line-height: 1;
+			cursor: pointer;
+			background: linear-gradient(135deg, #f3c34d 0%, #dca42f 100%);
+			color: #1a1410;
+			filter: drop-shadow(0 12px 24px rgba(243, 195, 77, 0.35));
+		}
+
+		.card-item-remove-btn {
+			position: absolute;
+			top: 6px;
+			right: 6px;
+			border: 0;
+			width: 26px;
+			height: 26px;
+			border-radius: 999px;
+			font-size: 16px;
+			line-height: 1;
+			cursor: pointer;
+			background: linear-gradient(135deg, #f3c34d 0%, #dca42f 100%);
+			color: #1a1410;
+			filter: drop-shadow(0 8px 16px rgba(243, 195, 77, 0.28));
+			transition: transform 0.18s ease, filter 0.18s ease;
+		}
+
+		.card-item-remove-btn:hover {
+			transform: scale(1.1);
+			filter: drop-shadow(0 10px 20px rgba(243, 195, 77, 0.35));
+		}
+
+		.overlay-caption {
+			margin-top: 10px;
+			font-weight: 700;
+			font-size: 14px;
+			font-family: "Cinzel", Georgia, serif;
+			text-align: center;
+			color: #f2d28b;
+		}
+
+		.carousel-arrow {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 40px;
+			height: 40px;
+			border-radius: 999px;
+			border: 0;
+			background: linear-gradient(135deg, rgba(243,195,77,0.22) 0%, rgba(201,146,24,0.16) 100%);
+			border: 1px solid rgba(243,195,77,0.4);
+			color: var(--accent);
+			font-size: 20px;
+			line-height: 1;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+			z-index: 10;
+			backdrop-filter: blur(4px);
+		}
+
+		.carousel-arrow:hover {
+			background: linear-gradient(135deg, rgba(243,195,77,0.38) 0%, rgba(201,146,24,0.28) 100%);
+			border-color: rgba(243,195,77,0.75);
+			transform: translateY(-50%) scale(1.08);
+		}
+
+		.carousel-arrow:disabled {
+			opacity: 0.28;
+			cursor: default;
+			pointer-events: none;
+		}
+
+		.carousel-arrow.prev { right: calc(100% + 10px); }
+		.carousel-arrow.next { left: calc(100% + 10px); }
+
+		.carousel-counter {
+			margin-top: 6px;
+			font-size: 11px;
+			color: var(--muted);
+			text-align: center;
+			letter-spacing: 0.04em;
+		}
+
+		.version-set-label {
+			margin-top: 3px;
+			font-size: 11px;
+			color: rgba(243,195,77,0.7);
+			text-align: center;
+			font-family: "Barlow", sans-serif;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: min(86vw, 590px);
+		}
+
+		.modal-actions {
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+			margin-top: 12px;
+		}
+
+		.modal-add-btn {
+			border: 0;
+			border-radius: 999px;
+			padding: 10px 22px;
+			background: linear-gradient(135deg, #f3c34d 0%, #dca42f 100%);
+			color: #1a1410;
+			font-weight: 700;
+			cursor: pointer;
+			font-family: "Cinzel", Georgia, serif;
+			font-size: 13px;
+			letter-spacing: 0.04em;
+			filter: drop-shadow(0 8px 18px rgba(243, 195, 77, 0.3));
+			transition: transform 0.18s ease, filter 0.18s ease;
+		}
+
+		.modal-add-btn:hover {
+			transform: translateY(-1px);
+			filter: drop-shadow(0 12px 24px rgba(243, 195, 77, 0.45));
+		}
+
+		/* === Card type themed backgrounds === */
+		.card-item[data-type="artifact"] {
+			background: linear-gradient(165deg, rgba(60, 80, 110, 0.82), rgba(30, 44, 68, 0.96));
+			border-color: rgba(180, 215, 255, 0.65);
+			box-shadow: inset 0 0 28px rgba(160, 200, 255, 0.12);
+		}
+		.card-item[data-type="artifact"]:hover {
+			border-color: rgba(200, 230, 255, 0.95);
+			box-shadow: inset 0 0 28px rgba(160, 200, 255, 0.12), 0 0 6px 2px rgba(160, 200, 255, 0.6);
+			filter: none;
+		}
+		.card-item[data-type="creature"] {
+			background: linear-gradient(165deg, rgba(10, 60, 22, 0.88), rgba(8, 36, 14, 0.97));
+			border-color: rgba(60, 220, 90, 0.6);
+			box-shadow: inset 0 0 28px rgba(40, 200, 70, 0.1);
+		}
+		.card-item[data-type="creature"]:hover {
+			border-color: rgba(80, 255, 110, 0.95);
+			box-shadow: inset 0 0 28px rgba(40, 200, 70, 0.1), 0 0 6px 2px rgba(60, 220, 80, 0.6);
+			filter: none;
+		}
+		.card-item[data-type="instant"] {
+			background: linear-gradient(165deg, rgba(10, 30, 90, 0.88), rgba(8, 18, 60, 0.97));
+			border-color: rgba(60, 140, 255, 0.62);
+			box-shadow: inset 0 0 28px rgba(40, 110, 255, 0.12);
+		}
+		.card-item[data-type="instant"]:hover {
+			border-color: rgba(80, 160, 255, 0.95);
+			box-shadow: inset 0 0 28px rgba(40, 110, 255, 0.12), 0 0 6px 2px rgba(60, 130, 255, 0.6);
+			filter: none;
+		}
+		.card-item[data-type="sorcery"] {
+			background: linear-gradient(165deg, rgba(60, 10, 90, 0.88), rgba(40, 6, 64, 0.97));
+			border-color: rgba(190, 80, 255, 0.62);
+			box-shadow: inset 0 0 28px rgba(160, 60, 240, 0.12);
+		}
+		.card-item[data-type="sorcery"]:hover {
+			border-color: rgba(210, 100, 255, 0.95);
+			box-shadow: inset 0 0 28px rgba(160, 60, 240, 0.12), 0 0 6px 2px rgba(180, 70, 255, 0.6);
+			filter: none;
+		}
+		.card-item[data-type="enchantment"] {
+			background: linear-gradient(165deg, rgba(6, 70, 70, 0.88), rgba(4, 44, 48, 0.97));
+			border-color: rgba(40, 230, 230, 0.6);
+			box-shadow: inset 0 0 28px rgba(30, 210, 210, 0.1);
+		}
+		.card-item[data-type="enchantment"]:hover {
+			border-color: rgba(60, 255, 255, 0.95);
+			box-shadow: inset 0 0 28px rgba(30, 210, 210, 0.1), 0 0 6px 2px rgba(40, 230, 230, 0.6);
+			filter: none;
+		}
+		.card-item[data-type="land"] {
+			background: linear-gradient(165deg, rgba(70, 44, 12, 0.88), rgba(48, 28, 6, 0.97));
+			border-color: rgba(210, 150, 60, 0.62);
+			box-shadow: inset 0 0 28px rgba(190, 130, 40, 0.1);
+		}
+		.card-item[data-type="land"]:hover {
+			border-color: rgba(240, 180, 80, 0.95);
+			box-shadow: inset 0 0 28px rgba(190, 130, 40, 0.1), 0 0 6px 2px rgba(210, 150, 50, 0.6);
+			filter: none;
+		}
+		.card-item[data-type="planeswalker"] {
+			background: linear-gradient(165deg, rgba(80, 48, 4, 0.88), rgba(56, 30, 4, 0.97));
+			border-color: rgba(255, 170, 30, 0.65);
+			box-shadow: inset 0 0 28px rgba(255, 150, 20, 0.12);
+		}
+		.card-item[data-type="planeswalker"]:hover {
+			border-color: rgba(255, 195, 60, 0.98);
+			box-shadow: inset 0 0 28px rgba(255, 150, 20, 0.12), 0 0 6px 2px rgba(255, 160, 30, 0.65);
+			filter: none;
+		}
+		.card-item[data-type="battle"] {
+			background: linear-gradient(165deg, rgba(90, 8, 8, 0.88), rgba(60, 4, 4, 0.97));
+			border-color: rgba(255, 60, 60, 0.62);
+			box-shadow: inset 0 0 28px rgba(230, 40, 40, 0.12);
+		}
+		.card-item[data-type="battle"]:hover {
+			border-color: rgba(255, 80, 80, 0.95);
+			box-shadow: inset 0 0 28px rgba(230, 40, 40, 0.12), 0 0 6px 2px rgba(255, 50, 50, 0.6);
+			filter: none;
+		}
+
+		/* === Modal glow by card type === */
+		.image-overlay[data-type="artifact"] .image-modal {
+			border-color: rgba(180, 215, 255, 0.55);
+		}
+		.image-overlay[data-type="artifact"].open .image-modal {
+			animation: none;
+			filter: drop-shadow(0 0 40px rgba(160, 200, 255, 0.55)) drop-shadow(0 34px 80px rgba(0,0,0,0.5));
+		}
+		.image-overlay[data-type="creature"] .image-modal {
+			border-color: rgba(60, 220, 90, 0.5);
+		}
+		.image-overlay[data-type="creature"].open .image-modal {
+			animation: none;
+			filter: drop-shadow(0 0 40px rgba(60, 220, 80, 0.55)) drop-shadow(0 34px 80px rgba(0,0,0,0.5));
+		}
+		.image-overlay[data-type="instant"] .image-modal {
+			border-color: rgba(60, 140, 255, 0.52);
+		}
+		.image-overlay[data-type="instant"].open .image-modal {
+			animation: none;
+			filter: drop-shadow(0 0 40px rgba(60, 130, 255, 0.55)) drop-shadow(0 34px 80px rgba(0,0,0,0.5));
+		}
+		.image-overlay[data-type="sorcery"] .image-modal {
+			border-color: rgba(190, 80, 255, 0.52);
+		}
+		.image-overlay[data-type="sorcery"].open .image-modal {
+			animation: none;
+			filter: drop-shadow(0 0 40px rgba(180, 70, 255, 0.55)) drop-shadow(0 34px 80px rgba(0,0,0,0.5));
+		}
+		.image-overlay[data-type="enchantment"] .image-modal {
+			border-color: rgba(40, 230, 230, 0.5);
+		}
+		.image-overlay[data-type="enchantment"].open .image-modal {
+			animation: none;
+			filter: drop-shadow(0 0 40px rgba(40, 230, 230, 0.55)) drop-shadow(0 34px 80px rgba(0,0,0,0.5));
+		}
+		.image-overlay[data-type="land"] .image-modal {
+			border-color: rgba(210, 150, 60, 0.52);
+		}
+		.image-overlay[data-type="land"].open .image-modal {
+			animation: none;
+			filter: drop-shadow(0 0 40px rgba(210, 150, 50, 0.55)) drop-shadow(0 34px 80px rgba(0,0,0,0.5));
+		}
+		.image-overlay[data-type="planeswalker"] .image-modal {
+			border-color: rgba(255, 170, 30, 0.55);
+		}
+		.image-overlay[data-type="planeswalker"].open .image-modal {
+			animation: none;
+			filter: drop-shadow(0 0 40px rgba(255, 160, 30, 0.6)) drop-shadow(0 34px 80px rgba(0,0,0,0.5));
+		}
+		.image-overlay[data-type="battle"] .image-modal {
+			border-color: rgba(255, 60, 60, 0.52);
+		}
+		.image-overlay[data-type="battle"].open .image-modal {
+			animation: none;
+			filter: drop-shadow(0 0 40px rgba(255, 50, 50, 0.55)) drop-shadow(0 34px 80px rgba(0,0,0,0.5));
+		}
+
+		.offer-inline {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			margin-top: 10px;
+			flex-wrap: wrap;
+		}
+
+		.card-item-empty {
+			color: var(--muted);
+		}
+
+		#selectedCardsContainer {
+			margin-top: 20px;
+		}
+
+		.card-row-controls {
+			margin-top: 12px;
+		}
+
+		.card-row-controls select {
+			flex: 1 1 220px;
+		}
+
+		.card-quantity {
+			flex: 0 0 110px;
+		}
+
+		.export-actions {
+			margin-top: 20px;
+		}
+
+		.export-output {
+			margin-top: 18px;
+			min-height: 220px;
+			resize: vertical;
+			line-height: 1.5;
+			background: rgba(13, 18, 29, 0.86);
+			border-color: rgba(243, 195, 77, 0.2);
+		}
+
+		@media (max-width: 980px) {
+			body {
+				padding: 16px;
+			}
+
+			.app-layout {
+				grid-template-columns: 1fr;
+			}
+
+			.card-sidebar {
+				position: static;
+			}
+
+			.language-toggle {
+				top: 10px;
+				right: 10px;
+				padding: 7px 10px;
+				font-size: 11px;
+			}
+		}
+	</STYLE>
+</HEAD>
+	<BODY TEXT="#000000">
+	<SCRIPT>
+(function () {
+	function escapeQuotes(value) {
+		return (value || "").replace(/"/g, "\\\"");
+	}
+
+	function normalizeText(value) {
+		return (value || "")
+			.toString()
+			.normalize("NFD")
+			.replace(/[\u0300-\u036f]/g, "")
+			.toLowerCase()
+			.trim();
+	}
+
+	var sellerOptions = [
+		"mazvigo",
+		"magicbarcelona",
+		"Devian-magic",
+		"moria05",
+		"manavortex",
+		"TEMPEST-STORE",
+		"willybizarre",
+		"Itaca",
+		"Metropolis-Center",
+		"Distritozero-Bilbao",
+		"Shark-Games",
+		"Dario-malaga",
+		"JupiterMadridNorte",
+		"Onlycards",
+		"DISTRITOZERO-TOLOSA",
+		"Distritozero-San",
+		"Distritozero-Valla",
+		"distritozero-vitoria",
+		"Eurekagames",
+		"Sorcith",
+		"DUAL-GAMES"
+	];
+	var sellerUserMap = {
+		"mazvigo": "Mazvigosl",
+		"magicbarcelona": "MagicBarcelona",
+		"Devian-magic": "Devian-Magic-Cards",
+		"moria05": "Moria05",
+		"manavortex": "ManaVortex-POOL4YOU",
+		"TEMPEST-STORE": "TEMPEST-STORE",
+		"willybizarre": "willybizarre",
+		"Itaca": "Itaca",
+		"Metropolis-Center": "Metropolis-Center",
+		"Distritozero-Bilbao": "Distritozero-Bilbao",
+		"Shark-Games": "Shark-Games",
+		"Dario-malaga": "Dario-malaga",
+		"JupiterMadridNorte": "JupiterMadridNorte",
+		"Onlycards": "Onlycards",
+		"DISTRITOZERO-TOLOSA": "DISTRITOZERO-TOLOSA",
+		"Distritozero-San": "Distritozero-San",
+		"Distritozero-Valla": "Distritozero-Valla",
+		"distritozero-vitoria": "distritozero-vitoria",
+		"Eurekagames": "Eurekagames",
+		"Sorcith": "Sorcith",
+		"DUAL-GAMES": "DUAL-GAMES"
+	};
+	var sellerDisplayMap = {
+		"mazvigo": "Mazvigosl",
+		"magicbarcelona": "MagicBarcelona",
+		"Devian-magic": "Devian-Magic-Cards",
+		"moria05": "Moria05",
+		"manavortex": "ManaVortex-POOL4YOU",
+		"TEMPEST-STORE": "TEMPEST-STORE",
+		"willybizarre": "willybizarre",
+		"Itaca": "Itaca",
+		"Metropolis-Center": "Metropolis-Center",
+		"Distritozero-Bilbao": "Distritozero-Bilbao",
+		"Shark-Games": "Shark-Games",
+		"Dario-malaga": "Dario-malaga",
+		"JupiterMadridNorte": "JupiterMadridNorte",
+		"Onlycards": "Onlycards",
+		"DISTRITOZERO-TOLOSA": "DISTRITOZERO-TOLOSA",
+		"Distritozero-San": "Distritozero-San",
+		"Distritozero-Valla": "Distritozero-Valla",
+		"distritozero-vitoria": "distritozero-vitoria",
+		"Eurekagames": "Eurekagames",
+		"Sorcith": "Sorcith",
+		"DUAL-GAMES": "DUAL-GAMES"
+	};
+	var finalListBySeller = {};
+	var selectedCards = [];
+	var lastRequestId = 0;
+	var searchDebounce = null;
+	var activePreviewKey = "";
+
+	document.body.innerHTML = "";
+
+	var layout = document.createElement("div");
+	layout.className = "app-layout";
+
+	var sidebar = document.createElement("aside");
+	sidebar.className = "card-sidebar";
+	sidebar.innerHTML =
+		'<h2 class="sidebar-title">SurveilRising</h2>' +
+		'<p class="sidebar-help">Busca las cartas en ingles y selecciona tu vendedor de confianza.</p>' +
+		'<div class="search-row">' +
+		'<input id="cardSearchInput" class="card-search" type="text" placeholder="Search card in English..." autocomplete="off" />' +
+		'<div class="sidebar-actions">' +
+		'<span id="cardCount"></span>' +
+		'<button id="clearSearchButton" class="clear-selection" type="button">Limpiar</button>' +
+		'</div>' +
+		'</div>' +
+		'<ul id="cardList" class="card-list"></ul>';
+
+	var panel = document.createElement("main");
+	panel.className = "table-area";
+	panel.innerHTML =
+		'<div class="builder-panel">' +
+		'<h2 class="sidebar-title">Lista de compra</h2>' +
+		'<p class="sidebar-help">Cada carta puede tener su vendedor. Pulsa AÑADIR en cada fila para anadirla a la lista final.</p>' +
+		'<div id="selectedCardsContainer"></div>' +
+		'<div class="export-actions">' +
+		'<button id="clearAllButton" class="clear-selection" type="button">Vaciar lista</button>' +
+		'</div>' +
+		'<textarea id="exportOutput" class="export-output" placeholder="Aqui aparecerá tu lista final..." readonly></textarea>' +
+		'</div>';
+
+	layout.appendChild(sidebar);
+	layout.appendChild(panel);
+	document.body.appendChild(layout);
+
+	var imageOverlay = document.createElement("div");
+	imageOverlay.className = "image-overlay";
+	imageOverlay.innerHTML =
+		'<div class="image-modal" role="dialog" aria-modal="true" aria-label="Card image preview">' +
+		'<button id="overlayCloseButton" class="image-close-btn" type="button" aria-label="Close preview">\u00d7</button>' +
+		'<button id="carouselPrev" class="carousel-arrow prev" type="button" aria-label="Versi\u00f3n anterior">&#8249;</button>' +
+		'<button id="carouselNext" class="carousel-arrow next" type="button" aria-label="Versi\u00f3n siguiente">&#8250;</button>' +
+		'<img id="overlayImage" class="image-overlay-content" alt="Card preview" />' +
+		'<div id="overlayCaption" class="overlay-caption"></div>' +
+		'<div id="versionSetLabel" class="version-set-label"></div>' +
+		'<div id="carouselCounter" class="carousel-counter"></div>' +
+		'<div class="modal-actions">' +
+		'<button id="overlayAddButton" class="modal-add-btn" type="button">+ A\u00f1adir a Lista</button>' +
+		'</div>' +
+		'</div>';
+	document.body.appendChild(imageOverlay);
+
+	var cardSearchInput = document.getElementById("cardSearchInput");
+	var cardList = document.getElementById("cardList");
+	var cardCount = document.getElementById("cardCount");
+	var clearSearchButton = document.getElementById("clearSearchButton");
+	var selectedCardsContainer = document.getElementById("selectedCardsContainer");
+	var clearAllButton = document.getElementById("clearAllButton");
+	var exportOutput = document.getElementById("exportOutput");
+	var overlayImage = document.getElementById("overlayImage");
+	var overlayCaption = document.getElementById("overlayCaption");
+	var overlayCloseButton = document.getElementById("overlayCloseButton");
+	var overlayAddButton = document.getElementById("overlayAddButton");
+	var carouselPrev = document.getElementById("carouselPrev");
+	var carouselNext = document.getElementById("carouselNext");
+	var carouselCounter = document.getElementById("carouselCounter");
+	var versionSetLabel = document.getElementById("versionSetLabel");
+	var overlayCloseTimer = null;
+	var currentSearchResultsCache = [];
+	var overlayActiveCard = null;
+	var carouselVersions = [];
+	var carouselIndex = 0;
+
+	function closeImageOverlay() {
+		if (!imageOverlay.classList.contains("open")) {
+			return;
+		}
+		imageOverlay.classList.remove("open");
+		imageOverlay.classList.add("closing");
+		if (overlayCloseTimer) {
+			clearTimeout(overlayCloseTimer);
+		}
+		overlayCloseTimer = setTimeout(function () {
+			imageOverlay.classList.remove("closing");
+			overlayImage.removeAttribute("src");
+			overlayCaption.textContent = "";
+		}, 230);
+	}
+
+	function updateCarouselView() {
+		if (!carouselVersions.length) return;
+		var v = carouselVersions[carouselIndex];
+		overlayImage.src = v.normalUrl;
+		versionSetLabel.textContent = v.setName + " #" + v.collectorNumber + (v.lang ? " [" + v.lang.toUpperCase() + "]" : "");
+		carouselCounter.textContent = (carouselIndex + 1) + " / " + carouselVersions.length;
+		carouselPrev.disabled = false;
+		carouselNext.disabled = false;
+	}
+
+	function loadCardVersions(englishName, currentSrc) {
+		carouselVersions = [];
+		carouselIndex = 0;
+		carouselCounter.textContent = "";
+		versionSetLabel.textContent = "";
+		carouselPrev.disabled = true;
+		carouselNext.disabled = true;
+		var url = "https://api.scryfall.com/cards/search?q=!" + encodeURIComponent('"' + englishName + '"') + "&unique=prints&order=released";
+		fetch(url)
+			.then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+			.then(function (data) {
+				if (!data.data || !data.data.length) return;
+				data.data.forEach(function (print) {
+					var normalUrl = (print.image_uris && print.image_uris.normal) ||
+						(print.card_faces && print.card_faces[0].image_uris && print.card_faces[0].image_uris.normal) || "";
+					if (!normalUrl) return;
+					carouselVersions.push({
+						normalUrl: normalUrl,
+						setName: print.set_name || print.set || "",
+						setCode: print.set || "",
+						collectorNumber: print.collector_number || "",
+						lang: print.lang || "",
+						scryfallId: print.id || ""
+					});
+				});
+				if (!carouselVersions.length) return;
+				var startIndex = 0;
+				for (var i = 0; i < carouselVersions.length; i++) {
+					if (carouselVersions[i].normalUrl === currentSrc) { startIndex = i; break; }
+				}
+				carouselIndex = startIndex;
+				updateCarouselView();
+			})
+			.catch(function () {
+				carouselCounter.textContent = "";
+				versionSetLabel.textContent = "";
+			});
+	}
+
+	carouselPrev.addEventListener("click", function (e) {
+		e.stopPropagation();
+		if (!carouselVersions.length) return;
+		carouselIndex = (carouselIndex - 1 + carouselVersions.length) % carouselVersions.length;
+		updateCarouselView();
+	});
+
+	carouselNext.addEventListener("click", function (e) {
+		e.stopPropagation();
+		if (!carouselVersions.length) return;
+		carouselIndex = (carouselIndex + 1) % carouselVersions.length;
+		updateCarouselView();
+	});
+
+	function openImageOverlay(src, altText, captionText, cardObj) {
+		if (!src) return;
+		if (overlayCloseTimer) clearTimeout(overlayCloseTimer);
+		imageOverlay.classList.remove("closing");
+		overlayImage.src = src;
+		overlayImage.alt = altText || "Card image";
+		overlayCaption.textContent = captionText || (altText || "");
+		overlayActiveCard = cardObj || null;
+		var typeKey = cardObj ? getCardTypeKey(cardObj.typeLine || "") : "";
+		if (typeKey) { imageOverlay.setAttribute("data-type", typeKey); }
+		else { imageOverlay.removeAttribute("data-type"); }
+		carouselVersions = [];
+		carouselIndex = 0;
+		carouselCounter.textContent = "";
+		versionSetLabel.textContent = "";
+		carouselPrev.disabled = true;
+		carouselNext.disabled = true;
+		var engName = cardObj ? (cardObj.englishName || cardObj.display || "") : (altText || "");
+		if (engName) loadCardVersions(engName, src);
+		imageOverlay.classList.add("open");
+	}
+
+	imageOverlay.addEventListener("click", function (event) {
+		if (event.target === imageOverlay) {
+			closeImageOverlay();
+		}
+	});
+
+	document.addEventListener("keydown", function (event) {
+		if (!imageOverlay.classList.contains("open")) return;
+		if (event.key === "Escape") { closeImageOverlay(); }
+		else if (event.key === "ArrowLeft") { if (carouselVersions.length) { carouselIndex = (carouselIndex - 1 + carouselVersions.length) % carouselVersions.length; updateCarouselView(); } }
+		else if (event.key === "ArrowRight") { if (carouselVersions.length) { carouselIndex = (carouselIndex + 1) % carouselVersions.length; updateCarouselView(); } }
+	});
+
+	overlayCloseButton.addEventListener("click", function (event) {
+		event.stopPropagation();
+		closeImageOverlay();
+	});
+
+	overlayAddButton.addEventListener("click", function (event) {
+		event.stopPropagation();
+		if (overlayActiveCard) {
+			var version = carouselVersions[carouselIndex] || null;
+			selectedCards.push({
+				name: overlayActiveCard.display,
+				englishName: overlayActiveCard.englishName,
+				seller: sellerOptions[0],
+				quantity: 1,
+				versionSet: version ? version.setName : "",
+				versionCode: version ? version.setCode : "",
+				versionNumber: version ? version.collectorNumber : "",
+				versionLang: version ? version.lang : "",
+				versionImageUrl: version ? version.normalUrl : (overlayActiveCard.imageUrl || "")
+			});
+			renderSelectedCards();
+			closeImageOverlay();
+		}
+	});
+
+	function getCardmarketUrl(card) {
+		var baseName = card.englishName || card.display || "";
+		var slug = baseName
+			.toString()
+			.normalize("NFD")
+			.replace(/[\u0300-\u036f]/g, "")
+			.replace(/['".,]/g, "")
+			.replace(/[^a-zA-Z0-9]+/g, "-")
+			.replace(/^-+|-+$/g, "");
+
+		return "https://www.cardmarket.com/en/Magic/Cards/" + slug + "?sellerCountry=10&sellerType=1,2&language=1,4";
+	}
+
+	function getSellerOfferUrl(sellerKey, cardName, lang) {
+		var sellerUser = sellerUserMap[sellerKey] || sellerKey;
+		return "https://www.cardmarket.com/en/Magic/Users/" + encodeURIComponent(sellerUser) + "/Offers/Singles?name=" + encodeURIComponent(cardName || "") + "&sortBy=price_asc&idLanguage=" + (lang || "1");
+	}
+
+	function getSellerDisplayName(sellerKey) {
+		return sellerDisplayMap[sellerKey] || sellerKey;
+	}
+
+	function getPriceLabel(card) {
+		if (card.priceEur) {
+			return card.priceEur.replace(".", ",") + " EUR";
+		}
+		if (card.priceUsd) {
+			return card.priceUsd + " USD";
+		}
+		return "Ver precio";
+	}
+
+	function buildPriceLink(card) {
+		var anchor = document.createElement("a");
+		anchor.className = "price-link";
+		anchor.href = getCardmarketUrl(card);
+		anchor.rel = "noopener noreferrer";
+		anchor.target = "_blank";
+		anchor.title = "Comprar en Cardmarket";
+		anchor.innerHTML =
+			'<img src="https://cdn-icons-png.flaticon.com/512/181/181598.png" alt="Cart" style="width: 14px; height: 14px; filter: brightness(1) invert(0.7);" />' +
+			"<span>" + getPriceLabel(card) + "</span>";
+		anchor.addEventListener("click", function (event) {
+			event.stopPropagation();
+		});
+		return anchor;
+	}
+
+	function renderSearchEmpty(text) {
+		cardList.innerHTML = "";
+		var emptyItem = document.createElement("li");
+		emptyItem.className = "card-item-empty";
+		emptyItem.textContent = text;
+		cardList.appendChild(emptyItem);
+	}
+
+	function getCardImageUrl(card) {
+		if (card.image_uris && card.image_uris.normal) {
+			return card.image_uris.normal;
+		}
+		if (card.card_faces && card.card_faces.length) {
+			var firstFace = card.card_faces[0];
+			if (firstFace.image_uris && firstFace.image_uris.normal) {
+				return firstFace.image_uris.normal;
+			}
+		}
+		return "";
+	}
+
+	function getCardArtCropUrl(card) {
+		if (card.image_uris && card.image_uris.art_crop) {
+			return card.image_uris.art_crop;
+		}
+		if (card.card_faces && card.card_faces.length) {
+			var firstFace = card.card_faces[0];
+			if (firstFace.image_uris && firstFace.image_uris.art_crop) {
+				return firstFace.image_uris.art_crop;
+			}
+		}
+		return "";
+	}
+
+	function renderSearchResults(results) {
+		cardList.innerHTML = "";
+		currentSearchResultsCache = results;
+		cardCount.textContent = results.length ? (results.length + " results") : "";
+
+		if (!results.length) {
+			renderSearchEmpty("No results found.");
+			return;
+		}
+
+		results.sort(function (a, b) {
+			return a.display.localeCompare(b.display, "en", { sensitivity: "base" });
+		});
+
+		results.forEach(function (card) {
+			var item = document.createElement("li");
+			item.className = "card-item" + (activePreviewKey === card.searchKey ? " active" : "");
+			item.title = card.subtitle || "";
+			var typeKey = getCardTypeKey(card.typeLine || "");
+			if (typeKey) {
+				item.setAttribute("data-type", typeKey);
+			}
+			if (card.artCropUrl) {
+				item.style.backgroundImage = "linear-gradient(rgba(8,14,26,0.72), rgba(8,14,26,0.82)), url('" + card.artCropUrl + "')";
+				item.style.backgroundSize = "cover";
+				item.style.backgroundPosition = "center";
+			}
+			item.addEventListener("click", function () {
+				activePreviewKey = card.searchKey;
+				openImageOverlay(card.imageUrl, card.display, card.display, card);
+				renderSearchResults(results);
+			});
+
+			var row = document.createElement("div");
+			row.className = "card-item-row";
+
+			var text = document.createElement("span");
+			text.className = "card-item-name";
+			text.textContent = card.display;
+
+			row.appendChild(text);
+			item.appendChild(row);
+
+			if (card.subtitle) {
+				var subtitle = document.createElement("div");
+				subtitle.className = "sidebar-help";
+				subtitle.style.marginTop = "4px";
+				subtitle.textContent = card.subtitle;
+				item.appendChild(subtitle);
+			}
+
+			var bottomRow = document.createElement("div");
+			bottomRow.style.cssText = "display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:8px;";
+
+			var addButton = document.createElement("button");
+			addButton.className = "clear-selection add-inline";
+			addButton.type = "button";
+			addButton.textContent = "Añadir";
+			addButton.addEventListener("click", function (event) {
+				event.stopPropagation();
+				selectedCards.push({
+					name: card.display,
+					englishName: card.englishName,
+					seller: sellerOptions[0],
+					quantity: 1
+				});
+				renderSelectedCards();
+			});
+
+			bottomRow.appendChild(buildPriceLink(card));
+			bottomRow.appendChild(addButton);
+			item.appendChild(bottomRow);
+			cardList.appendChild(item);
+		});
+	}
+
+	function buildScryfallQuery(rawText) {
+		var query = escapeQuotes(rawText.replace(/\s+/g, " ").trim());
+		return "name:\"" + query + "\"";
+	}
+
+	function getCardTypeKey(typeLine) {
+		var t = typeLine.toLowerCase();
+		if (t.indexOf("artifact") !== -1) return "artifact";
+		if (t.indexOf("land") !== -1) return "land";
+		if (t.indexOf("planeswalker") !== -1) return "planeswalker";
+		if (t.indexOf("battle") !== -1) return "battle";
+		if (t.indexOf("enchantment") !== -1) return "enchantment";
+		if (t.indexOf("instant") !== -1) return "instant";
+		if (t.indexOf("sorcery") !== -1) return "sorcery";
+		if (t.indexOf("creature") !== -1) return "creature";
+		return "";
+	}
+
+	function dedupeResults(cards) {
+		var seen = {};
+		var output = [];
+		cards.forEach(function (card) {
+			var display = card.name || card.printed_name;
+			if (!display) {
+				return;
+			}
+			var key = normalizeText(display + "|" + (card.name || ""));
+			if (seen[key]) {
+				return;
+			}
+			seen[key] = true;
+			output.push({
+				display: display,
+				englishName: card.name || display,
+				subtitle: card.printed_name && card.printed_name !== display ? ("Printed: " + card.printed_name) : "",
+				imageUrl: getCardImageUrl(card),
+				artCropUrl: getCardArtCropUrl(card),
+				priceEur: card.prices && card.prices.eur ? card.prices.eur : "",
+				priceUsd: card.prices && card.prices.usd ? card.prices.usd : "",
+				typeLine: card.type_line || "",
+				searchKey: key
+			});
+		});
+		return output;
+	}
+
+	function fetchScryfallCards(value) {
+		var trimmed = value.replace(/\s+/g, " ").trim();
+		if (trimmed.length < 2) {
+			cardCount.textContent = "";
+			renderSearchEmpty("Type at least 2 characters.");
+			return;
+		}
+
+		var requestId = ++lastRequestId;
+		cardCount.textContent = "Searching...";
+
+		var url = "https://api.scryfall.com/cards/search?q=" + encodeURIComponent(buildScryfallQuery(trimmed)) + "&order=name&unique=cards&include_multilingual=true";
+
+		fetch(url)
+			.then(function (response) {
+				if (!response.ok) {
+					throw new Error("Scryfall no responde");
+				}
+				return response.json();
+			})
+			.then(function (payload) {
+				if (requestId !== lastRequestId) {
+					return;
+				}
+				var list = Array.isArray(payload.data) ? payload.data : [];
+				renderSearchResults(dedupeResults(list).slice(0, 80));
+			})
+			.catch(function () {
+				if (requestId !== lastRequestId) {
+					return;
+				}
+				cardCount.textContent = "";
+				renderSearchEmpty("Could not query Scryfall.");
+			});
+	}
+
+	function buildSellerSelect(index, selectedSeller) {
+		var select = document.createElement("select");
+		select.className = "card-search";
+		select.style.padding = "6px 8px";
+		select.style.marginTop = "6px";
+		sellerOptions.forEach(function (seller) {
+			var option = document.createElement("option");
+			option.value = seller;
+			option.textContent = getSellerDisplayName(seller);
+			if (seller === selectedSeller) {
+				option.selected = true;
+			}
+			select.appendChild(option);
+		});
+		select.addEventListener("change", function () {
+			selectedCards[index].seller = select.value;
+			renderSelectedCards();
+		});
+		return select;
+	}
+
+	function buildQuantityInput(index, selectedQuantity) {
+		var select = document.createElement("select");
+		select.className = "card-quantity";
+		select.style.cssText = "flex:0 0 auto;width:58px;padding-left:6px;padding-right:2px;";
+		for (var q = 0; q <= 20; q++) {
+			var opt = document.createElement("option");
+			opt.value = q;
+			opt.textContent = q;
+			if (q === (selectedQuantity || 1)) {
+				opt.selected = true;
+			}
+			select.appendChild(opt);
+		}
+		select.addEventListener("change", function () {
+			selectedCards[index].quantity = parseInt(select.value, 10);
+		});
+		return select;
+	}
+
+	function buildPriceInput(index, selectedPrice) {
+		var wrapper = document.createElement("div");
+		wrapper.style.cssText = "display:flex;align-items:center;gap:4px;flex:0 0 auto;";
+
+		var input = document.createElement("input");
+		input.className = "card-quantity";
+		input.type = "number";
+		input.min = "0";
+		input.step = "0.01";
+		input.placeholder = "Precio";
+		input.style.width = "90px";
+		input.value = selectedPrice != null ? selectedPrice : "";
+		input.addEventListener("input", function () {
+			var val = parseFloat(input.value);
+			selectedCards[index].price = (!isNaN(val) && val >= 0) ? val : null;
+		});
+		input.addEventListener("keydown", function (e) {
+			if (e.key === "Enter") {
+				e.preventDefault();
+				appendEntryToFinalList(selectedCards[index]);
+			}
+		});
+
+		var symbol = document.createElement("span");
+		symbol.textContent = "€";
+		symbol.style.cssText = "color:var(--accent);font-weight:700;font-size:14px;";
+
+		wrapper.appendChild(input);
+		wrapper.appendChild(symbol);
+		return wrapper;
+	}
+
+	function appendEntryToFinalList(entry) {
+		var sellerKey = entry.seller;
+		var cardLabel = (entry.englishName || entry.name || "").toLowerCase();
+		var priceVal = (entry.price != null) ? String(entry.price) : "";
+		var cardKey = normalizeText(entry.englishName || entry.name) + "|" + priceVal;
+
+		if (!finalListBySeller[sellerKey]) {
+			finalListBySeller[sellerKey] = {};
+		}
+
+		if (!finalListBySeller[sellerKey][cardKey]) {
+			finalListBySeller[sellerKey][cardKey] = {
+				name: cardLabel,
+				quantity: 0,
+				price: entry.price != null ? entry.price : null
+			};
+		}
+
+		finalListBySeller[sellerKey][cardKey].quantity += (entry.quantity || 1);
+		renderFinalOutput();
+	}
+
+	function renderFinalOutput() {
+		var sellerKeys = Object.keys(finalListBySeller);
+		if (!sellerKeys.length) {
+			exportOutput.value = "";
+			return;
+		}
+
+		sellerKeys.sort(function (a, b) {
+			return getSellerDisplayName(a).localeCompare(getSellerDisplayName(b), "en", { sensitivity: "base" });
+		});
+
+		var blocks = sellerKeys.map(function (sellerKey) {
+			var cardMap = finalListBySeller[sellerKey] || {};
+			var cardEntries = Object.keys(cardMap).map(function (cardKey) {
+				return cardMap[cardKey];
+			});
+
+			cardEntries.sort(function (a, b) {
+				return a.name.localeCompare(b.name, "en", { sensitivity: "base" });
+			});
+
+			var lines = [getSellerDisplayName(sellerKey) + ":"];
+			cardEntries.forEach(function (cardEntry) {
+				var line = cardEntry.quantity + " " + cardEntry.name;
+				if (cardEntry.price != null) {
+					var priceStr = String(cardEntry.price).replace(".", ",");
+					line += " = " + priceStr + " €";
+				}
+				lines.push(line);
+			});
+
+			return lines.join("\n");
+		});
+
+		exportOutput.value = blocks.join("\n<<<<<<<<-_-_->>>>>>>>\n");
+	}
+
+	function buildAddToFinalButton(index) {
+		var addButton = document.createElement("button");
+		addButton.className = "clear-selection add-final";
+		addButton.type = "button";
+		addButton.textContent = "Añadir";
+		addButton.addEventListener("click", function () {
+			appendEntryToFinalList(selectedCards[index]);
+		});
+		return addButton;
+	}
+
+	function renderSelectedCards() {
+		selectedCardsContainer.innerHTML = "";
+		if (!selectedCards.length) {
+			selectedCardsContainer.innerHTML = '<p class="sidebar-help">No cards added yet.</p>';
+			return;
+		}
+
+		selectedCards.forEach(function (entry, index) {
+			var row = document.createElement("div");
+			row.className = "card-item";
+			row.style.border = "1px solid rgba(243, 195, 77, 0.34)";
+			row.style.borderRadius = "10px";
+			row.style.marginBottom = "8px";
+
+			var title = document.createElement("div");
+			title.style.fontWeight = "700";
+			title.textContent = (index + 1) + ". " + entry.name;
+
+			var sub = document.createElement("div");
+			sub.className = "sidebar-help";
+			sub.style.margin = "4px 0";
+			sub.textContent = entry.englishName !== entry.name ? ("EN: " + entry.englishName) : "";
+
+			var removeButton = document.createElement("button");
+			removeButton.className = "card-item-remove-btn";
+			removeButton.type = "button";
+			removeButton.textContent = "×";
+			removeButton.addEventListener("click", function () {
+				selectedCards.splice(index, 1);
+				renderSelectedCards();
+			});
+
+			row.appendChild(removeButton);
+			row.appendChild(title);
+			if (sub.textContent) {
+				row.appendChild(sub);
+			}
+
+			var controls = document.createElement("div");
+			controls.className = "card-row-controls";
+			controls.appendChild(buildSellerSelect(index, entry.seller));
+
+			var qtyPriceRow = document.createElement("div");
+			qtyPriceRow.style.cssText = "display:flex;align-items:center;gap:8px;flex-wrap:nowrap;";
+			qtyPriceRow.appendChild(buildQuantityInput(index, entry.quantity));
+			qtyPriceRow.appendChild(buildPriceInput(index, entry.price != null ? entry.price : null));
+			controls.appendChild(qtyPriceRow);
+
+			row.appendChild(controls);
+
+			var cardNameForUrl = entry.englishName || entry.name;
+			var sellerLink = document.createElement("a");
+			sellerLink.className = "price-link";
+			sellerLink.href = getSellerOfferUrl(entry.seller, cardNameForUrl, "1");
+			sellerLink.rel = "noopener noreferrer";
+			sellerLink.target = "_blank";
+			sellerLink.textContent = "Abrir " + (sellerUserMap[entry.seller] || entry.seller) + " oferta (Inglés)";
+
+			var sellerLinkEs = document.createElement("a");
+			sellerLinkEs.className = "price-link";
+			sellerLinkEs.href = getSellerOfferUrl(entry.seller, cardNameForUrl, "4");
+			sellerLinkEs.rel = "noopener noreferrer";
+			sellerLinkEs.target = "_blank";
+			sellerLinkEs.textContent = "Abrir " + (sellerUserMap[entry.seller] || entry.seller) + " oferta (Español)";
+
+			var offerInline = document.createElement("div");
+			offerInline.className = "offer-inline";
+			offerInline.style.justifyContent = "space-between";
+			offerInline.style.alignItems = "center";
+			offerInline.appendChild(sellerLink);
+			offerInline.appendChild(sellerLinkEs);
+			offerInline.appendChild(buildAddToFinalButton(index));
+			row.appendChild(offerInline);
+
+			selectedCardsContainer.appendChild(row);
+		});
+	}
+
+	cardSearchInput.addEventListener("input", function () {
+		if (searchDebounce) {
+			clearTimeout(searchDebounce);
+		}
+		searchDebounce = setTimeout(function () {
+			fetchScryfallCards(cardSearchInput.value || "");
+		}, 300);
+	});
+
+	clearSearchButton.addEventListener("click", function () {
+		cardSearchInput.value = "";
+		cardCount.textContent = "";
+		renderSearchEmpty("Type a card name in English to search.");
+	});
+
+	clearAllButton.addEventListener("click", function () {
+		selectedCards = [];
+		finalListBySeller = {};
+		exportOutput.value = "";
+		renderSelectedCards();
+	});
+
+	renderSearchEmpty("Type a card name in English to search.");
+	renderSelectedCards();
+})();
+</SCRIPT>
+</BODY>
+
+</HTML>
