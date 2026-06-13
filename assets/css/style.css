@@ -496,8 +496,13 @@ button, input, select, textarea { font:inherit; }
 .quantity-select {
 	flex:0 0 auto;
 	width:58px;
-	padding-left:6px;
-	padding-right:2px;
+	padding:12px 14px 12px 6px;
+	border:1px solid var(--line);
+	border-radius:14px;
+	background:var(--panel-strong);
+	color:var(--text);
+	outline:none;
+	transition:border-color 0.2s ease, filter 0.2s ease, transform 0.2s ease;
 }
 
 .price-wrapper {
@@ -507,7 +512,16 @@ button, input, select, textarea { font:inherit; }
 	flex:0 0 auto;
 }
 
-.price-input { width:90px; }
+.price-input {
+	width:90px;
+	border:1px solid var(--line);
+	border-radius:14px;
+	padding:12px 14px;
+	background:var(--panel-strong);
+	color:var(--text);
+	outline:none;
+	transition:border-color 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+}
 
 .price-symbol {
 	color:var(--accent);
