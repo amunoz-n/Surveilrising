@@ -3,7 +3,8 @@
 <HTML>
 <HEAD>
 	
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=UTF-8">
+	<META CHARSET="UTF-8">
 	<META NAME="VIEWPORT" CONTENT="width=device-width, initial-scale=1.0">
 	<LINK REL="preconnect" HREF="https://fonts.googleapis.com">
 	<LINK REL="preconnect" HREF="https://fonts.gstatic.com" crossorigin>
@@ -43,14 +44,18 @@
 			min-height: 100%;
 			font-family: "Barlow", "Trebuchet MS", sans-serif;
 			color: var(--text);
-			background:
-				radial-gradient(circle at 0% 0%, rgba(243, 195, 77, 0.14), transparent 36%),
-				radial-gradient(circle at 100% 0%, rgba(106, 83, 33, 0.22), transparent 42%),
-				linear-gradient(180deg, #0a0f17 0%, var(--bg) 45%, #090d14 100%);
 		}
 
 		body {
 			padding: 24px;
+			background:
+				radial-gradient(circle at 0% 0%, rgba(243, 195, 77, 0.14), transparent 36%),
+				radial-gradient(circle at 100% 0%, rgba(106, 83, 33, 0.22), transparent 42%),
+				url('assets/background/background.jpg');
+			background-size: auto, auto, cover;
+			background-position: center center;
+			background-attachment: fixed;
+			background-repeat: no-repeat;
 		}
 
 		button,
@@ -798,7 +803,7 @@
 		'<div class="export-actions">' +
 		'<button id="clearAllButton" class="clear-selection" type="button">Vaciar lista</button>' +
 		'</div>' +
-		'<textarea id="exportOutput" class="export-output" placeholder="Aqui aparecerá tu lista final..." readonly></textarea>' +
+		'<textarea id="exportOutput" class="export-output" placeholder="Aqui aparecera tu lista final..." readonly></textarea>' +
 		'</div>';
 
 	layout.appendChild(sidebar);
